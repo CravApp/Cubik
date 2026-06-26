@@ -1,0 +1,53 @@
+name: kubik_tasks
+description: Kubik - Gestión inteligente de tareas con alarmas y recordatorios
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # ── Estado: Riverpod ─────────────────────────────────────────────
+  flutter_riverpod: 2.5.1          # Gestión de estado reactiva
+  riverpod_annotation: 2.3.5       # Anotaciones para code generation
+
+  # ── Persistencia local: Hive ──────────────────────────────────────
+  hive: 2.2.3                      # Base de datos NoSQL local
+  hive_flutter: 1.1.0              # Adaptador Flutter para Hive
+
+  # ── Notificaciones y Alarmas ──────────────────────────────────────
+  flutter_local_notifications: 17.2.4  # Notificaciones locales (primer plano y segundo plano)
+  timezone: 0.9.4                       # Manejo de zonas horarias para notificaciones programadas
+
+  # ── Navegación ────────────────────────────────────────────────────
+  go_router: 14.8.1               # Navegación declarativa
+
+  # ── UI / UX ───────────────────────────────────────────────────────
+  flutter_animate: 4.5.0          # Animaciones fluidas declarativas
+  intl: 0.19.0                    # Formateo de fechas y localización
+  google_fonts: 6.2.1             # Tipografías (Poppins para el diseño Kubik)
+  # lucide_icons removed (incompatible version)
+
+  # ── Utilidades ────────────────────────────────────────────────────
+  uuid: 4.5.1                     # Generación de IDs únicos para tareas
+  shared_preferences: 2.5.3       # Preferencias de usuario (tema, idioma)
+  provider: 6.1.5+1               # Usado para ThemeMode en MaterialApp
+  http: 1.5.0
+
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  hive_generator: 2.0.1           # Genera adaptadores de Hive automáticamente
+  build_runner: 2.4.13            # Runner para code generation
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/icons/
