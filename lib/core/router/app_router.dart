@@ -18,6 +18,7 @@ import '../../features/calendar/presentation/screens/calendar_screen.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
 import '../../features/tasks/domain/entities/task_entity.dart';
+import '../../features/ble/presentation/screens/ble_screen.dart';
 import '../widgets/main_shell.dart';
 
 // ─── Rutas con nombre ──────────────────────────────────────────────────────
@@ -31,6 +32,7 @@ abstract class AppRoutes {
   static const settings = '/settings';
   static const taskForm = '/task/form';
   static const taskDetail = '/task/detail';
+  static const ble        = '/ble';
 }
 
 final GoRouter appRouter = GoRouter(
@@ -101,6 +103,15 @@ final GoRouter appRouter = GoRouter(
           transitionsBuilder: _slideTransition,
         );
       },
+    ),
+
+    // ── Pantalla BLE ──────────────────────────────────────────────────
+    GoRoute(
+      path: AppRoutes.ble,
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: const BleScreen(),
+        transitionsBuilder: _slideUpTransition,
+      ),
     ),
   ],
 );

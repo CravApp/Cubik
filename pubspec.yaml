@@ -37,6 +37,9 @@ dependencies:
   provider: 6.1.5+1               # Usado para ThemeMode en MaterialApp
   http: 1.5.0
 
+  # ── Bluetooth Low Energy ──────────────────────────────────────────
+  flutter_blue_plus: 1.35.3        # BLE scan, connect, read, write, notify
+
   cupertino_icons: ^1.0.8
 
 dev_dependencies:
@@ -50,3 +53,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/icons/

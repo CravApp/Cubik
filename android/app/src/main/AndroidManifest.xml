@@ -58,6 +58,47 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <!-- ═══════════════════════════════════════════════════════════
+         PERMISOS BLUETOOTH LOW ENERGY (BLE)
+         ═══════════════════════════════════════════════════════════
+
+         Android 12+ (API 31+): Nuevos permisos BLUETOOTH_SCAN y BLUETOOTH_CONNECT
+         reemplazan al antiguo BLUETOOTH (que sigue siendo necesario para API < 31).
+
+         BLUETOOTH_SCAN   → Escanear dispositivos BLE cercanos
+         BLUETOOTH_CONNECT→ Conectar/vincular con un dispositivo BLE
+         BLUETOOTH_ADMIN  → Administrar el adaptador BT (activar/desactivar)
+         ACCESS_FINE_LOCATION → Requerido en Android < 12 para escanear BLE
+                                (en Android 12+ se usa neverForLocation si no
+                                 necesitamos localización)
+         ═══════════════════════════════════════════════════════════ -->
+
+    <!-- Hardware: Declarar que la app usa BLE (no la hace incompatible con
+         dispositivos sin BLE si required=false) -->
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="false"/>
+
+    <!-- Android < 12 (API < 31): Permisos BLE heredados -->
+    <uses-permission android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"
+        android:maxSdkVersion="30"/>
+
+    <!-- Android 12+ (API 31+): Escaneo BLE sin acceso a ubicación -->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"
+        android:usesPermissionFlags="neverForLocation"/>
+
+    <!-- Android 12+ (API 31+): Conectar a dispositivos BLE -->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+
+    <!-- Localización fina: requerida para BLE en Android < 12 -->
+    <!-- En Android 12+ usamos neverForLocation para evitar solicitarla -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"
+        android:maxSdkVersion="30"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"
+        android:maxSdkVersion="30"/>
+
+    <!-- ═══════════════════════════════════════════════════════════
          PERMISOS DE RED (para futuras integraciones de API)
          ═══════════════════════════════════════════════════════════ -->
     <uses-permission android:name="android.permission.INTERNET"/>

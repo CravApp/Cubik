@@ -18,6 +18,8 @@ import '../../../../core/theme/app_theme.dart';
 import '../providers/task_providers.dart';
 import '../widgets/task_card.dart';
 import '../widgets/stat_card.dart';
+import '../../../ble/presentation/providers/ble_providers.dart';
+import '../../../ble/domain/entities/ble_device_entity.dart';
 
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
@@ -257,6 +259,14 @@ class DashboardScreen extends ConsumerWidget {
                 ),
               ],
 
+              // ── Tarjeta de acceso rápido BLE ──────────────────────
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: _BleSummaryCard(),
+                ).animate().fadeIn(delay: 600.ms),
+              ),
+
               const SliverToBoxAdapter(child: SizedBox(height: 100)),
             ],
           ),
@@ -426,6 +436,77 @@ class _EmptySection extends StatelessWidget {
               color: AppTheme.kubikBlue, fontFamily: 'Poppins',
               fontWeight: FontWeight.w500,
             )),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ─── Tarjeta resumen BLE en Dashboard ────────────────────────────────────────
+class _BleSummaryCard extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final connState  = ref.watch(bleConnectionStateProvider);
+    final battery    = ref.watch(bleBatteryProvider);
+    final device     = ref.watch(bleConnectedDeviceProvider);
+    final isConnected = connState.isConnected;
+
+    final cardColor = isConnected ? AppTheme.kubikBlue : AppTheme.kubikCoral;
+
+    return GestureDetector(
+      onTap: () => context.push(AppRoutes.ble),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          color: cardColor.withValues(alpha: 0.07),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: cardColor.withValues(alpha: 0.25)),
+        ),
+        child: Row(
+          children: [
+            // Ícono BLE
+            Container(
+              width: 40, height: 40,
+              decoration: BoxDecoration(
+                color: cardColor.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                isConnected
+                    ? Icons.bluetooth_connected_rounded
+                    : Icons.bluetooth_rounded,
+                color: cardColor, size: 22,
+              ),
+            ),
+            const SizedBox(width: 12),
+            // Texto
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    isConnected ? 'ESP32 conectado' : 'ESP32 desconectado',
+                    style: TextStyle(
+                      fontSize: 13, fontWeight: FontWeight.w700,
+                      color: cardColor, fontFamily: 'Poppins',
+                    ),
+                  ),
+                  Text(
+                    isConnected
+                        ? '${device?.name ?? 'Kubik ESP32'}'
+                            '${battery != null ? ' · Batería $battery%' : ''}'
+                        : 'Toca para conectar tu ESP32',
+                    style: TextStyle(
+                      fontSize: 11, color: cardColor.withValues(alpha: 0.7),
+                      fontFamily: 'Poppins',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(Icons.chevron_right_rounded, color: cardColor, size: 20),
           ],
         ),
       ),
